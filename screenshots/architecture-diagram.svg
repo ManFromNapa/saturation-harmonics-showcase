@@ -1,0 +1,102 @@
+<svg viewBox="0 0 1150 640" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6a5a78"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1150" height="640" fill="#0d0a12"/>
+  <text x="30" y="40" fill="#e9e4f0" font-size="20" font-weight="700">Signal Flow — Per-Block Processing</text>
+
+  <!-- box style helper via repeated rects -->
+  <!-- Input -->
+  <rect x="30" y="90" width="150" height="60" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="105" y="115" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Audio In</text>
+  <text x="105" y="133" fill="#b7abc9" font-size="11" text-anchor="middle">host buffer</text>
+
+  <!-- Dry copy branch -->
+  <rect x="230" y="20" width="170" height="55" rx="8" fill="#1c1722" stroke="#6a6a71"/>
+  <text x="315" y="42" fill="#e7def2" font-size="12" text-anchor="middle" font-weight="600">Dry Copy</text>
+  <text x="315" y="58" fill="#b7abc9" font-size="10" text-anchor="middle">captured pre-gain, for Mix</text>
+
+  <!-- Input Gain -->
+  <rect x="230" y="90" width="170" height="60" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="315" y="115" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Input Gain</text>
+  <text x="315" y="133" fill="#b7abc9" font-size="11" text-anchor="middle">manual gain-stage</text>
+
+  <!-- Oversampling -->
+  <rect x="450" y="90" width="180" height="60" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="540" y="112" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">4x Oversampling</text>
+  <text x="540" y="130" fill="#b7abc9" font-size="10" text-anchor="middle">half-band polyphase IIR</text>
+  <text x="540" y="144" fill="#b7abc9" font-size="10" text-anchor="middle">(alias control for the waveshaper)</text>
+
+  <!-- Voice engine dispatch box (dashed outer) -->
+  <rect x="680" y="30" width="320" height="220" rx="10" fill="none" stroke="#4d4d52" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="840" y="20" fill="#b7abc9" font-size="12" text-anchor="middle">Preamp Voice Engine (1 of 11)</text>
+
+  <!-- Transformer engine -->
+  <rect x="700" y="45" width="280" height="80" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="840" y="65" fill="#e7def2" font-size="12" text-anchor="middle" font-weight="600">Transformer Preamp Engine</text>
+  <text x="840" y="82" fill="#b7abc9" font-size="10" text-anchor="middle">input xfmr → active stage → output xfmr</text>
+  <text x="840" y="97" fill="#b7abc9" font-size="10" text-anchor="middle">freq-weighted split, hysteresis, waveshaper, DC block</text>
+  <text x="840" y="112" fill="#6a5a78" font-size="9" text-anchor="middle">Neve · API · V72 · V76 · UA610 · Manley · REDD.47 · TG12428 · Avalon · RUSTY</text>
+
+  <!-- Active-only engine -->
+  <rect x="700" y="140" width="280" height="60" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="840" y="162" fill="#e7def2" font-size="12" text-anchor="middle" font-weight="600">Active-Only Preamp Engine</text>
+  <text x="840" y="178" fill="#b7abc9" font-size="10" text-anchor="middle">waveshaper + DC block only (no transformer)</text>
+  <text x="840" y="192" fill="#6a5a78" font-size="9" text-anchor="middle">SSL VHD</text>
+
+  <!-- Drive/Weight params feeding engines -->
+  <rect x="700" y="215" width="130" height="28" rx="6" fill="#110d17" stroke="#4d4d52"/>
+  <text x="765" y="234" fill="#d9a0f0" font-size="10" text-anchor="middle">Drive → active stage</text>
+  <rect x="850" y="215" width="130" height="28" rx="6" fill="#110d17" stroke="#4d4d52"/>
+  <text x="915" y="234" fill="#d9a0f0" font-size="10" text-anchor="middle">Weight → transformer(s)</text>
+
+  <!-- Downsample -->
+  <rect x="450" y="270" width="180" height="55" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="540" y="292" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Downsampling</text>
+  <text x="540" y="309" fill="#b7abc9" font-size="10" text-anchor="middle">back to host sample rate</text>
+
+  <!-- Output Gain -->
+  <rect x="230" y="270" width="170" height="55" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="315" y="292" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Output Gain</text>
+  <text x="315" y="309" fill="#b7abc9" font-size="10" text-anchor="middle">manual gain-stage</text>
+
+  <!-- Mix blend -->
+  <rect x="230" y="350" width="370" height="60" rx="8" fill="#1c1722" stroke="#6a6a71"/>
+  <text x="415" y="372" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Mix Blend (Dry ↔ Wet)</text>
+  <text x="415" y="390" fill="#b7abc9" font-size="10" text-anchor="middle">also folds in the bypass crossfade ramp</text>
+
+  <!-- Clip / meter tap -->
+  <rect x="650" y="350" width="180" height="60" rx="8" fill="#1c1722" stroke="#6a6a71"/>
+  <text x="740" y="372" fill="#e7def2" font-size="12" text-anchor="middle" font-weight="600">Peak / Clip Detect</text>
+  <text x="740" y="390" fill="#b7abc9" font-size="10" text-anchor="middle">drives LED meters + clip lights</text>
+
+  <!-- Output -->
+  <rect x="30" y="350" width="150" height="60" rx="8" fill="#251f30" stroke="#b26ee0" stroke-width="1.5"/>
+  <text x="105" y="375" fill="#e7def2" font-size="13" text-anchor="middle" font-weight="600">Audio Out</text>
+  <text x="105" y="393" fill="#b7abc9" font-size="11" text-anchor="middle">host buffer</text>
+
+  <!-- Voice-switch / bypass crossfade note -->
+  <rect x="700" y="440" width="380" height="90" rx="8" fill="#1c1722" stroke="#6a6a71"/>
+  <text x="890" y="462" fill="#e7def2" font-size="12" text-anchor="middle" font-weight="600">Crossfade Guards</text>
+  <text x="890" y="480" fill="#b7abc9" font-size="10" text-anchor="middle">15ms linear ramp on voice switch</text>
+  <text x="890" y="496" fill="#b7abc9" font-size="10" text-anchor="middle">15ms linear ramp on host bypass toggle</text>
+  <text x="890" y="512" fill="#b7abc9" font-size="10" text-anchor="middle">(outgoing engine kept running briefly to avoid pops)</text>
+
+  <!-- Arrows -->
+  <path d="M180,120 L228,120" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M180,110 C200,80 210,55 228,48" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M400,120 L448,120" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M630,120 L698,120" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M840,250 L840,270 L630,270 L630,297" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none" transform="translate(0,0)"/>
+  <path d="M840,251 L840,297 L630,297" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M450,297 L400,297" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M315,325 L315,348" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M315,47 C315,60 315,75 315,88" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M315,75 L340,340 L320,350" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none" opacity="0"/>
+  <path d="M340,47 C420,150 400,300 380,350" stroke="#6a5a78" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" fill="none"/>
+  <text x="470" y="345" fill="#6a5a78" font-size="9">dry path feeds the blend</text>
+  <path d="M230,380 L180,380" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M600,380 L648,380" stroke="#6a5a78" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+</svg>
